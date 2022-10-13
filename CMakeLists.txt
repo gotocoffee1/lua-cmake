@@ -222,7 +222,7 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
     install(
       TARGETS lua_shared
       EXPORT luaTargets
-      RUNTIME COMPONENT lua_shared_runtime
+      RUNTIME COMPONENT lua_shared_runtime COMPONENT lua_runtime
       LIBRARY COMPONENT lua_shared_runtime COMPONENT lua_runtime NAMELINK_COMPONENT lua_devel
       ARCHIVE COMPONENT lua_devel
       INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
