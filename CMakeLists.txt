@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 
 # configs
 set(LUA_VERSION
-  "5.4.4"
+  "5.4.6"
   CACHE STRING "Lua version that should be used")
 
 option(LUA_BUILD_AS_CXX "Complie Lua as cpp code" OFF)
