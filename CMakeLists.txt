@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.30)
 
 # configs
 set(LUA_VERSION
-  "5.4.6"
+  "5.4.7"
   CACHE STRING "Lua version that should be used")
 
 option(LUA_BUILD_AS_CXX "Complie Lua as cpp code" OFF)
@@ -18,29 +18,17 @@ endif()
 # project
 project(Lua
   VERSION ${LUA_VERSION}
-  HOMEPAGE_URL "www.lua.org")
-
-set(LUA_PATH "${CMAKE_CURRENT_BINARY_DIR}/lua-${LUA_VERSION}")
-set(LUA_SRC_PATH "${LUA_PATH}/src")
+  HOMEPAGE_URL "https://www.lua.org/")
 
 # download src
-if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/lua-${LUA_VERSION}.tar.gz")
-  file(DOWNLOAD "www.lua.org/ftp/lua-${LUA_VERSION}.tar.gz"
-    "${LUA_PATH}.tar.gz"
-    STATUS DOWNLOAD_STATUS)
+include(FetchContent)
 
-  list(GET DOWNLOAD_STATUS 0 STATUS_CODE)
-  list(GET DOWNLOAD_STATUS 1 ERROR_MESSAGE)
+FetchContent_Populate(
+  lua
+  URL "https://www.lua.org/ftp/lua-${LUA_VERSION}.tar.gz"
+  DOWNLOAD_NO_PROGRESS ON)
 
-  if(NOT ${STATUS_CODE} EQUAL 0)
-    message(FATAL_ERROR "Error occurred during download: ${ERROR_MESSAGE}")
-  endif()
-
-  execute_process(
-    COMMAND ${CMAKE_COMMAND} -E tar -xf
-    "${LUA_PATH}.tar.gz"
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-endif()
+set(LUA_SRC_PATH "${lua_SOURCE_DIR}/src")
 
 file(GLOB_RECURSE SOURCE_FILES
   "${LUA_SRC_PATH}/*.c")
