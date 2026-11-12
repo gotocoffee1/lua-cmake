@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.30)
 
 # configs
 set(LUA_VERSION
-  "5.4.7"
+  "5.4.9"
   CACHE STRING "Lua version that should be used")
 
 option(LUA_BUILD_AS_CXX "Complie Lua as cpp code" OFF)
@@ -10,6 +10,7 @@ option(LUA_BUILD_SHARED "Build Lua shared lib" ON)
 option(LUA_BUILD_INTERPRETER "Build Lua interpreter" ON)
 option(LUA_BUILD_COMPILER "Build Lua compiler" ON)
 option(LUA_BUILD_VERSION_SUFFIX "Append version on output files" OFF)
+set(LUA_URL_PREFIX "https://www.lua.org/ftp/lua-" CACHE STRING "URL prefix for Lua source tarballs")
 
 if(EMSCRIPTEN)
   set(LUA_BUILD_SHARED OFF)
@@ -25,7 +26,7 @@ include(FetchContent)
 
 FetchContent_Populate(
   lua
-  URL "https://www.lua.org/ftp/lua-${LUA_VERSION}.tar.gz"
+  URL "${LUA_URL_PREFIX}${LUA_VERSION}.tar.gz"
   DOWNLOAD_NO_PROGRESS ON)
 
 set(LUA_SRC_PATH "${lua_SOURCE_DIR}/src")
